@@ -1,5 +1,7 @@
 # Nombre de tu escena
 
+Emergency Case
+
 Allan Miranda Páez · Realidades Extendidas y Experiencias Inmersivas · UGM · 2026
 
 ## 1 · Qué es
@@ -41,38 +43,38 @@ Simulador de casos medicos, para estudiantes de medicina, con un objetivo de inm
 
 ## 4 · Decisiones
 
-- Qué decidí y por qué (luz, sonido, materiales, interacción).
-- Qué cambió respecto de lo que propuse en la Solemne 1, y por qué.
+- Decidi una iluminación que se asemeje a un ambiente nocturno, con sonidos que solo apoyen el impacto visual y que no distraigan al usuario, para que así haya mas enfoque en las tareas a la mano, las interacciones están a la vista y se permiten los errores las veces que sean necesarias.
+- Eliminé el sistema de puntaje, para Destacar aun más el enfoque de ensayo y error que quiero darlo a mi proyecto
 
 ## 5 · Testing
 
 Video del recorrido: https://youtu.be/Io01NVRmhoM
 
 ### Abrir el enlace en ventana privada
-- Resultado: Posible
+- Resultado: Posible desde el inicio
 
 ### Dispositivo elegido
 - Resultado: Principalmente Computador
-- Ajuste que hice: 
+- Ajuste que hice: Interacciones desde los clicks del mouse y un espacio visual limpio
 
 ### Interacciones, una por una
-- Resultado: ...
+- Resultado: Menú de inicio, cambio de escenas entre casos, objetos seleccionables que deben ser elegidos en un orden especifico, sistema de pistas contextuales a la mano para el usuario, una forma de dejar el caso por medio de un modelo de ambulancia, dependiendo de como se sale de la experiencia, termina en fallo (ambulancia), o en victoria (procedimientos con instrumentos medicos)
 
 ### Sonido con audífonos
-- Resultado: ...
-- Ajuste que hice: ...
+- Resultado: Desde sonido de fondo hasta sonidos contextuales
+- Ajuste que hice: Los sonidos de fondo suenan desde el momento que el usuario interactua con cualquier objeto, ya que al ser una experiencia web, debe tener el permiso del usuario para esto en el navegador, así que al hacer que suene desde la primera interacción, se puede omitir este paso
 
 ### Fluidez del recorrido
 - Resultado: Fluidez lograda, usuario no se atora en el procedimiento medico
-- Ajuste que hice: ...
+- Ajuste que hice: El sistema de pistas da pistas claras para seguir un procedimiento en especifico
 
 ### Entrar como si fuera la primera vez
-- Resultado: ...
-- Ajuste que hice: ...
+- Resultado: La interfaz es clara y al punto
+- Ajuste que hice: Un menú que solo tiene lo necesario y no ahoga visualmente
 
 ## 6 · Uso de IA
 
-- La IA (Chat GPT) asistio en cuanto al uso de JavaScript en ciertas partes como por ejemplo el funcionamiento del menu principal, la transición entre escenas y la distribución random de arboles.
+- La IA (Chat GPT) asistio en cuanto al uso de JavaScript en ciertas partes como por ejemplo el funcionamiento del menu principal, la transición entre escenas y la distribución random de arboles y el sistema de selecciones correctas.
 - Hice la gran mayoria de los escenarios distribuyendo los modelos, hice el codigo principal fuera del JavaScript y además alteré el mismo codigo JavaScript para que el funcionamiento fuera especifico de lo que yo queria.
 
 ## 7 · Pendientes para el examen
