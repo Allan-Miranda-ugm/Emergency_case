@@ -6,36 +6,62 @@
     <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
   </head>
   <body>
-    <div id="fade"></div>
+    <div id="fade">
+      <h1 id="final-message">¡Paciente estable!</h1>
+    </div>
     <style>
     #fade {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: black;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 1.5s ease;
-        z-index: 9999;
-    }
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1.5s ease;
+    z-index: 9999;
 
-    #fade.active {
-        opacity: 1;
-    }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#fade.active {
+    opacity: 1;
+}
+
+#final-message {
+    color: white;
+    font-size: 60px;
+    font-family: Arial, sans-serif;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+#fade.active #final-message {
+    opacity: 1;
+}
 </style>
     <a-scene cursor="rayOrigin: mouse" raycaster="objects: .interactivo">
       <a-assets>
         <a-asset-item id="m_aventurero" src="activos/m_aventurero.glb"></a-asset-item>
-        <a-asset-item id="silla" src="activos/silla.glb"></a-asset-item>
         <a-asset-item id="trees" src="activos/trees.glb"></a-asset-item>
         <a-asset-item id="ambulancia" src="activos/ambulancia.glb"></a-asset-item>
         <a-asset-item id="bed" src="activos/bed.glb"></a-asset-item>
+        <a-asset-item id="bandage_r" src="activos/bandage_r.glb"></a-asset-item>
+        <a-asset-item id="table_pildoras" src="activos/pildoras.glb"></a-asset-item>
+        <a-asset-item id="jeringa" src="activos/jeringa.glb"></a-asset-item>
+        <a-asset-item id="bandage" src="activos/bandage.glb"></a-asset-item>
+        <a-asset-item id="botiquin" src="activos/botiquin.glb"></a-asset-item>
         <a-asset-item id="IVfluid" src="activos/IVfluid.glb"></a-asset-item>
+        <a-asset-item id="table_f" src="activos/table_f.glb"></a-asset-item>
         <a-asset-item id="icono_ambulancia" src="activos/icono_ambulancia.glb"></a-asset-item>
         <audio id="interact" src="sonidos/interact.mp3"></audio>
         <audio id="finish" src="sonidos/finish.mp3"></audio>
+        <audio id="correcto_1" src="sonidos/correcto_1.mp3"></audio>
+        <audio id="correcto_2" src="sonidos/correcto_2.mp3"></audio>
+        <audio id="error" src="sonidos/error.mp3"></audio>
         <audio id="ambient_forest" src="sonidos/ambient_forest.mp3"></audio>
       </a-assets>
       <script>
@@ -91,38 +117,87 @@
     scene.appendChild(tree);
   }
 </script>
-      <a-entity gltf-model="#m_aventurero" position="0 0 0" rotation="-90 90 0" scale="0.7 0.7 0.7"></a-entity>
-      <a-entity gltf-model="#silla" position="1.5 0 1.5" rotation="0 -150 0"></a-entity>
+
+      <a-entity gltf-model="#m_aventurero" position="0.8 0.3 0.5" rotation="-90 -30 0" scale="0.7 0.7 0.7"></a-entity>
       <a-entity gltf-model="#trees" position="0 1.8 -2" rotation="0 0 0" scale="1.5 1.5 1.5"></a-entity>
       <a-entity gltf-model="#trees" position="3 1.8 -2" rotation="0 20 0" scale="1.5 1.5 1.5"></a-entity>
       
-      <a-entity class="interactivo" id="ambulance" gltf-model="#ambulancia" position="-3 0 1" rotation="0 -75 0" scale="0.2 0.2 0.2"
+      <a-entity class="interactivo" id="ambulance" gltf-model="#ambulancia" position="-4 0 1" rotation="0 -75 0" scale="0.2 0.2 0.2"
         animation__enter="property: scale; to: 0.21 0.21 0.21;
         dur: 200; startEvents: mouseenter"
         animation__leave="property: scale; to: 0.2 0.2 0.2;
         dur: 200; startEvents: mouseleave"></a-entity>
+        <a-text value="Salir de ejercicio" id="exit-text" color="#FFFFFF" position="-2 2.5 0.5" rotation="0 90 0"
+      align="center" width="4" color="#222D62"></a-text>
+      <a-entity class="interactivo" id="bandage-r" gltf-model="#bandage_r" position="0 0.6 1.5" rotation="90 0 0" scale="1 1 1"
+        animation__enter="property: scale; to: 1.2 1.2 1.2;
+        dur: 200; startEvents: mouseenter"
+        animation__leave="property: scale; to: 1 1 1;
+        dur: 200; startEvents: mouseleave"
+        sound="src: #interact; on: click; positional: true"></a-entity>
+        <a-text id="bandager-text" value="Vendajes" position="0 1 1.5" rotation="0 10 0"
+        align="center" width="2" color="#FFFFFF" visible="false"></a-text>
+
+      <a-entity id="bandaid" class="interactivo" gltf-model="#bandage" position="0 0.6 0.5" rotation="30 90 0" scale="0.1 0.1 0.1"
+       animation__enter="property: scale; to: 0.12 0.12 0.12;
+        dur: 200; startEvents: mouseenter"
+        animation__leave="property: scale; to: 0.1 0.1 0.1;
+        dur: 200; startEvents: mouseleave"
+        sound="src: #interact; on: click; positional: true"></a-entity>
+        <a-text id="bandaid-text" value="Parche curita" position="0 1 0.7" rotation="0 10 0"
+        align="center" width="2" color="#FFFFFF" visible="false"></a-text>
+
+      <a-entity class="interactivo" id="needle" gltf-model="#jeringa" position="0 0.6 1" rotation="90 0 0" scale="1 1 1"
+        animation__enter="property: scale; to: 1.2 1.2 1.2;
+        dur: 200; startEvents: mouseenter"
+        animation__leave="property: scale; to: 1 1 1;
+        dur: 200; startEvents: mouseleave"
+        sound="src: #interact; on: click; positional: true">
+
       </a-entity>
-      </a-entity>
+        <a-text id="needle-text" value="Jeringa de anestesia" position="0 1 1" rotation="0 10 0"
+        align="center" width="2" color="#FFFFFF" visible="false"></a-text>
+
+      <a-entity gltf-model="#table_f" position="0 0.3 1" rotation="0 0 0" scale="0.4 0.4 0.4"></a-entity>
       <a-entity gltf-model="#bed" position="1 0.2 0" rotation="0 -30 0" scale="1.5 1.5 1.5"></a-entity>  
       <a-entity gltf-model="#IVfluid" position="0.5 0.7 0" rotation="0 30 0" scale="1.5 1.5 1.5"></a-entity>
-      <a-entity class="interactivo" gltf-model="#icono_ambulancia" position="2 0.5 0" rotation="0 -75 0" scale="0.2 0.2 0.2"
+      <a-entity id="hint1-icon"class="interactivo" gltf-model="#icono_ambulancia" position="2 0.5 0" rotation="0 -75 0" scale="0.2 0.2 0.2"
         animation__enter="property: scale; to: 0.3 0.3 0.3;
         dur: 200; startEvents: mouseenter"
         animation__leave="property: scale; to: 0.2 0.2 0.2;
         dur: 200; startEvents: mouseleave"
         animation="property: rotation; from: 0 0 0; to: 0 360 0; loop: true; dur: 3000; easing: linear"
         sound="src: #interact; on: click; positional: true"></a-entity>
-      <a-entity camera="fov:60" look-controls wasd-controls position="0 1.6 0"
+        <a-text id="hint-1" value="Esguince de tobillo,
+        inicia con analgesicos y coloca el vendaje" position="2 1 0" rotation="0 0 0"
+        align="center" width="2" color="#FFFFFF" visible="false"></a-text>
+      <a-entity camera="fov:60" look-controls wasd-controls camera-boundary position="1 1.3 3"
       sound="src: #ambient_forest; loop: true; autoplay: true; positional: false; volume: 0.5"
       light="type: spot; color: #FFFFFF; intensity: 3; angle: 35; penumbra: 0.5; distance: 15"
       position="0 0 -0.5"
-      rotation="0 0 0"></a-entity>
-      <a-text value="Salir de ejercicio" color="#FFFFFF" position="-1.5 2.5 0.5" rotation="0 90 0"
-      align="center" width="4" color="#222D62"></a-text>
-      </a-box>
-      <a-box position="0 0.2 0" rotation="0 70 0" color="#4CC3D9" scale="0.5 0.5 0.5"></a-box>
+      rotation="0 0 0">
+      <a-text
+        id="correct-message"
+        value="¡Bien!"
+        position="0 0.3 -2"
+        align="center"
+        width="4"
+        color="#00FF00"
+        visible="false">
+    </a-text>
 
-      <a-plane rotation="-90 0 0" width="10" height="10" color="#7BC8A4"></a-plane>
+    <a-text
+        id="fail-message"
+        value="Mal, comienza desde el inicio"
+        position="0 0.3 -2"
+        align="center"
+        width="4"
+        color="#FF0000"
+        visible="false">
+    </a-text>
+  </a-entity>
+
+      <a-plane rotation="-90 0 0" width="30" height="30" color="#7BC8A4"></a-plane>
       <a-sky color="#1B2033"></a-sky>
 
       <a-light type="ambient" color="#8FA0D8" intensity="0.25"></a-light>
@@ -133,15 +208,197 @@
 const ambulance = document.querySelector("#ambulance");
 const fade = document.querySelector("#fade");
 const finishSound = document.querySelector("#finish");
+const correcto1Sound = document.querySelector("#correcto_1");
+const correcto2Sound = document.querySelector("#correcto_2");
+const errorSound = document.querySelector("#error");
 
+function playSound(sound) {
+    sound.pause();
+    sound.currentTime = 0;
+    sound.play();
+}
 let transitioning = false;
 
 ambulance.addEventListener("click", function() {
 
-    // Prevent multiple clicks
+    if (transitioning) return;
+
+    if (gameFinished) return;
+
+    transitioning = true;
+
+    document.querySelector("#final-message").innerText =
+        "Paciente no estable...";
+
+    finishSound.play();
+
+    fade.classList.add("active");
+
+    setTimeout(function() {
+        window.location.href = "index.html";
+    }, 5000);
+
+});
+
+AFRAME.registerComponent('camera-boundary', {
+  tick: function () {
+    const pos = this.el.object3D.position;
+
+    // Maximum distance from the center
+    const maxX = 3;
+    const maxZ = 4;
+
+    // Keep camera inside the forest
+    pos.x = Math.max(-maxX, Math.min(maxX, pos.x));
+    pos.z = Math.max(-maxZ, Math.min(maxZ, pos.z));
+  }
+});
+const needle = document.querySelector("#needle");
+const needleText = document.querySelector("#needle-text");
+needle.addEventListener("mouseenter", () => needleText.setAttribute("visible", true));
+needle.addEventListener("mouseleave", () => needleText.setAttribute("visible", false));
+
+const bandage = document.querySelector("#bandaid");
+const bandageText = document.querySelector("#bandaid-text");
+bandage.addEventListener("mouseenter", () => bandageText.setAttribute("visible", true));
+bandage.addEventListener("mouseleave", () => bandageText.setAttribute("visible", false));
+
+const bandager = document.querySelector("#bandage-r");
+const bandagerText = document.querySelector("#bandager-text");
+bandager.addEventListener("mouseenter", () => bandagerText.setAttribute("visible", true));
+bandager.addEventListener("mouseleave", () => bandagerText.setAttribute("visible", false));
+
+
+const hint1icon = document.querySelector("#hint1-icon");
+const hint1text = document.querySelector("#hint-1");
+hint1icon.addEventListener("click", () => {
+
+    hint1text.setAttribute("visible", true);
+    setTimeout(() => {
+        hint1text.setAttribute("visible", false);
+    }, 3000);
+});
+const correctMessage = document.querySelector("#correct-message");
+const failMessage = document.querySelector("#fail-message");
+
+let step = 0;
+let gameFinished = false;
+
+
+// Mostrar mensaje correcto
+function showCorrectMessage() {
+
+    correctMessage.setAttribute("visible", true);
+
+    setTimeout(() => {
+        correctMessage.setAttribute("visible", false);
+    }, 2000);
+}
+
+
+// Mostrar mensaje de error
+function showFailMessage() {
+
+    failMessage.setAttribute("visible", true);
+
+    setTimeout(() => {
+        failMessage.setAttribute("visible", false);
+    }, 2000);
+}
+
+
+// Reiniciar el ejercicio después de un error
+function failGame() {
+
+    showFailMessage();
+
+    // Play error sound
+    playSound(errorSound);
+
+    // Reset exercise
+    step = 0;
+    gameFinished = false;
+}
+
+
+// JERINGA
+needle.addEventListener("click", function () {
+
+    if (gameFinished || transitioning) return;
+
+    // Jeringa is only correct as the first step
+    if (step === 0) {
+
+        step = 1;
+
+        showCorrectMessage();
+
+        // Play first correct sound
+        playSound(correcto1Sound);
+
+        console.log("Correcto: Jeringa");
+
+    } else {
+
+        failGame();
+
+        console.log("Incorrecto: Jeringa");
+    }
+});
+
+
+// BANDAGE_R
+bandager.addEventListener("click", function () {
+
+    if (gameFinished || transitioning) return;
+
+    // Only correct after selecting the needle
+    if (step === 1) {
+
+        step = 2;
+        showCorrectMessage();
+        gameFinished = true;
+
+        console.log("Correcto: Bandage_r");
+
+        // Play second correct sound
+        correcto2Sound.onended = function() {
+            victoryTransition();
+        };
+
+        playSound(correcto2Sound);
+
+        // Fallback in case the audio fails
+        correcto2Sound.onerror = function() {
+            victoryTransition();
+        };
+
+    } else {
+
+        failGame();
+
+        console.log("Incorrecto: Bandage_r");
+    }
+});
+// BANDAGE NORMAL
+bandage.addEventListener("click", function () {
+
+    if (gameFinished) return;
+
+    // Bandage normal SIEMPRE es incorrecto
+    failGame();
+
+    console.log("Incorrecto: Bandage");
+});
+function victoryTransition() {
+
     if (transitioning) return;
 
     transitioning = true;
+
+    // Victory message
+    document.querySelector("#final-message").innerText =
+        "¡Paciente estable!";
 
     // Play finish sound
     finishSound.play();
@@ -149,15 +406,14 @@ ambulance.addEventListener("click", function() {
     // Fade to black
     fade.classList.add("active");
 
-    // Load next HTML after transition
+    // Load next HTML
     setTimeout(function() {
 
         window.location.href = "index.html";
 
     }, 5000);
 
-});
-
+}
 </script>
   </body>
 </html>
